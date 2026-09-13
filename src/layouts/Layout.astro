@@ -1,0 +1,32 @@
+---
+import '../styles/global.css';
+interface Props { title: string; description?: string }
+const { title, description = "Nyan's daily Finnish class notes: grammar, vocabulary, phrases, and mistakes." } = Astro.props;
+const base = import.meta.env.BASE_URL;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width" />
+  <title>{title} · Nyan’s Finnish Notes</title>
+  <meta name="description" content={description} />
+  <link rel="canonical" href={new URL(Astro.url.pathname, Astro.site)} />
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+  <header>
+    <nav aria-label="Main navigation">
+      <a class="brand" href={base}>Nyan’s <strong>Finnish Notes</strong></a>
+      <form role="search" action={`${base}search/`}>
+        <label class="sr-only" for="query">Search all notes</label>
+        <input id="query" name="q" type="search" placeholder="Search everything I’ve learned…" />
+        <button type="submit">Search</button>
+      </form>
+      <a href={`${base}days/`}>All days</a>
+    </nav>
+  </header>
+  <main id="main"><slot /></main>
+  <footer>Opi vähän joka päivä. <span>Learn a little every day.</span></footer>
+</body>
+</html>

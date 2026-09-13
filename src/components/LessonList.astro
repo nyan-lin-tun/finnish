@@ -1,0 +1,14 @@
+---
+import type { CollectionEntry } from 'astro:content';
+interface Props { lessons: CollectionEntry<'lessons'>[] }
+const { lessons } = Astro.props;
+---
+<ul class="lessons">
+  {lessons.map(({ id, data }) => <li>
+    <p class="eyebrow">Day {data.day} · <time datetime={data.date}>{data.date}</time></p>
+    <h2><a href={`${import.meta.env.BASE_URL}days/${id}/`}>{data.title}</a></h2>
+    <p>{data.summary}</p>
+    <div class="tags">{data.topics.map(topic => <a href={`${import.meta.env.BASE_URL}topics/${topic}/`}>{topic}</a>)}</div>
+  </li>)}
+</ul>
+{lessons.length === 0 && <p>No lessons here yet.</p>}

@@ -23,3 +23,6 @@ pnpm-debug.log*
 Thumbs.db
 *.swp
 *.swo
+
+# Local Obsidian workspace settings
+.obsidian/

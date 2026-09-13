@@ -1,0 +1,10 @@
+---
+import { getCollection } from 'astro:content';
+import { topics } from '../../content.config';
+import Layout from '../../layouts/Layout.astro';
+import LessonList from '../../components/LessonList.astro';
+export function getStaticPaths() { return topics.map(topic => ({ params: { topic }, props: { topic } })); }
+const { topic } = Astro.props;
+const lessons = (await getCollection('lessons', ({ data }) => !data.draft && data.topics.includes(topic))).sort((a,b) => b.data.day-a.data.day);
+---
+<Layout title={topic}><p class="eyebrow">BROWSE BY TOPIC</p><h1 class="capitalize">{topic}</h1><LessonList lessons={lessons} /></Layout>

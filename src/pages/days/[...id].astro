@@ -1,0 +1,25 @@
+---
+import { getCollection, render } from 'astro:content';
+import Layout from '../../layouts/Layout.astro';
+export async function getStaticPaths() {
+  const lessons = await getCollection('lessons', ({ data }) => !data.draft);
+  const days = new Set<number>();
+  return lessons.map(lesson => {
+    if (days.has(lesson.data.day)) throw new Error(`Duplicate study day: ${lesson.data.day}`);
+    days.add(lesson.data.day);
+    return { params: { id: lesson.id }, props: { lesson } };
+  });
+}
+const { lesson } = Astro.props;
+const { Content } = await render(lesson);
+---
+<Layout title={lesson.data.title} description={lesson.data.summary}>
+  <article data-pagefind-body>
+    <p class="eyebrow">Day {lesson.data.day} · <time datetime={lesson.data.date}>{lesson.data.date}</time></p>
+    <h1 data-pagefind-meta="title">{lesson.data.title}</h1>
+    <p class="intro">{lesson.data.summary}</p>
+    <div class="tags">{lesson.data.topics.map(topic => <a data-pagefind-filter="Topic" href={`${import.meta.env.BASE_URL}topics/${topic}/`}>{topic}</a>)}</div>
+    <p class="keywords">{lesson.data.tags.join(' · ')}</p>
+    <div class="prose"><Content /></div>
+  </article>
+</Layout>
