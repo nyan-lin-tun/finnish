@@ -2,6 +2,7 @@
 title: "Introductions and where I live"
 date: "2026-09-07"
 day: 1
+draft: true
 summary: "Say your name, describe where you live, and distinguish minä from minun."
 topics: [grammar, vocabulary, phrases, mistakes]
 tags: [minä, minun, asua, inessive, "-ssa/-ssä", Espoossa]
